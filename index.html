@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <title></title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.46.0/codemirror.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.46.0/theme/material.css" />
+</head>
+<body>
+<label for="textarea">Zone de texte</label><br>
+<textarea id="textarea"></textarea>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.46.0/codemirror.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.46.0/mode/markdown/markdown.js"></script>
+<script>
+    const elementBold = `<button type="button" data-val="bold" class="btn btn-default"><i class="fas fa-bold"></i></button>`;
+
+    $("#textarea").before(elementBold);
+
+    const editor = CodeMirror.fromTextArea(document.getElementById("textarea"), {
+        mode: 'markdown',
+        lineNumbers: true,
+        theme: "material",
+        extraKeys: {"Enter": "newlineAndIndentContinueMarkdownList"}
+    });
+
+    $('button').click(function(){
+
+        const val = $(this).data('val');
+        const string = editor.getSelection();
+
+        switch(val){
+            case 'bold':
+                editor.replaceSelection('**' + string + '**');
+                break;
+        }
+    });
+
+    //Themes: material, midnight, monokai, nord, solarized-dark, tomorrow-night-bright, yonce
+
+</script>
+</body>
+</html>
