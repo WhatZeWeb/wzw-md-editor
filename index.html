@@ -6,13 +6,25 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.46.0/codemirror.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.46.0/theme/material.css" />
+    <style>
+        .CodeMirror {
+            width: 50%;
+            float: left;
+        }
+        iframe{
+            width: 49%;
+            float: left;
+        }
+    </style>
 </head>
 <body>
 <label for="textarea">Zone de texte</label><br>
 <textarea id="textarea"></textarea>
+<div id="preview"></div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.46.0/codemirror.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.46.0/mode/markdown/markdown.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 <script>
     const elementBold = `<button type="button" data-val="bold" class="btn btn-default"><i class="fas fa-bold"></i></button>`;
     const elementItalic = `<button type="button" data-val="italic" class="btn btn-default"><i class="fas fa-italic"></i></button>`;
@@ -23,34 +35,43 @@
     $("#textarea").before(stylesList);
 
     const editor = CodeMirror.fromTextArea(document.getElementById("textarea"), {
-        mode: 'markdown',
+        mode: 'text/html',
         lineNumbers: true,
         theme: "material",
         extraKeys: {"Enter": "newlineAndIndentContinueMarkdownList"}
+    }).on('change', editor => {
+        console.log(editor.getValue());
+        document.getElementById('preview').innerHTML =
+            marked(editor.getValue());
+
+        start(editor);
     });
 
-    $('button').click(function(){
+    function start(editor)
+    {
+        $('button').click(function(){
 
-        const val = $(this).data('val');
-        const string = editor.getSelection();
+            const val = $(this).data('val');
+            const string = editor.getSelection();
 
-        switch(val){
-            case 'bold':
-                //setBold(editor, string);
-                setStyle(editor, string, '*', 2);
-                break;
+            switch(val){
+                case 'bold':
+                    //setBold(editor, string);
+                    setStyle(editor, string, '*', 2);
+                    break;
 
-            case 'italic':
-                //setItalic(editor, string);
-                setStyle(editor, string, '*', 1);
-                break;
+                case 'italic':
+                    //setItalic(editor, string);
+                    setStyle(editor, string, '*', 1);
+                    break;
 
-            case 'strikethrough':
-                //setItalic(editor, string);
-                setStyle(editor, string, '~', 2);
-                break;
-        }
-    });
+                case 'strikethrough':
+                    //setItalic(editor, string);
+                    setStyle(editor, string, '~', 2);
+                    break;
+            }
+        });
+    }
 
     function setStyle(editor, string, char, length) {
         console.log(editor, string, char, length);
