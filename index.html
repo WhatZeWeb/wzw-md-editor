@@ -35,61 +35,41 @@
 
         switch(val){
             case 'bold':
-                setBold(editor, string);
+                //setBold(editor, string);
+                setStyle(editor, string, '*', 2);
                 break;
 
             case 'italic':
-                setItalic(editor, string);
+                //setItalic(editor, string);
+                setStyle(editor, string, '*', 1);
                 break;
         }
     });
 
-    function setBold(editor, string)
-    {
+    function setStyle(editor, string, char, length) {
+        console.log(editor, string, char, length);
+
         if(string.length > 0) {
-            let start = string.includes('**', 0);
-            let end = string.includes('**', string.length - 2);
+            let value = char.repeat(length);
+            let start = string.includes(`${value}`, 0);
+            let end = string.includes(`${value}`, string.length - length);
 
             if(start && end) {
-                removeBold(editor, string);
+                removeStyle(editor, string, length);
             } else {
-                addBold(editor, string);
+                addStyle(editor, string, value);
             }
         }
     }
 
-    function addBold(editor, string)
+    function addStyle(editor, string, value)
     {
-        editor.replaceSelection('**' + string + '**');
+        editor.replaceSelection(`${value}${string}${value}`);
     }
 
-    function removeBold(editor, string)
+    function removeStyle(editor, string, length)
     {
-        editor.replaceSelection(string.substring(2, string.length - 2));
-    }
-
-    function setItalic(editor, string)
-    {
-        if(string.length > 0) {
-            let start = string.includes('*', 0);
-            let end = string.includes('*', string.length - 1);
-
-            if(start && end) {
-                removeItalic(editor, string);
-            } else {
-                addItalic(editor, string);
-            }
-        }
-    }
-
-    function addItalic(editor, string)
-    {
-        editor.replaceSelection('*' + string + '*');
-    }
-
-    function removeItalic(editor, string)
-    {
-        editor.replaceSelection(string.substring(1, string.length - 1));
+        editor.replaceSelection(string.substring(length, string.length - length));
     }
 
     //Themes: material, midnight, monokai, nord, solarized-dark, tomorrow-night-bright, yonce
