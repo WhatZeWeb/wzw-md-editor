@@ -16,8 +16,9 @@
 <script>
     const elementBold = `<button type="button" data-val="bold" class="btn btn-default"><i class="fas fa-bold"></i></button>`;
     const elementItalic = `<button type="button" data-val="italic" class="btn btn-default"><i class="fas fa-italic"></i></button>`;
+    const elementStrikeThrough = `<button type="button" data-val="strikethrough" class="btn btn-default"><i class="fas fa-strikethrough"></i></button>`;
 
-    const stylesList = `${elementBold} ${elementItalic}`;
+    const stylesList = `${elementBold} ${elementItalic} ${elementStrikeThrough}`;
 
     $("#textarea").before(stylesList);
 
@@ -42,6 +43,11 @@
             case 'italic':
                 //setItalic(editor, string);
                 setStyle(editor, string, '*', 1);
+                break;
+
+            case 'strikethrough':
+                //setItalic(editor, string);
+                setStyle(editor, string, '~', 2);
                 break;
         }
     });
