@@ -32,10 +32,35 @@
 
         switch(val){
             case 'bold':
-                editor.replaceSelection('**' + string + '**');
+                setBold(editor, string);
                 break;
         }
     });
+
+    function setBold(editor, string)
+    {
+        let start = string.includes('**', 0);
+        let end = string.includes('**', string.length - 2);
+
+        if(start && end) {
+            removeBold(editor, string);
+        } else {
+            addBold(editor, string);
+        }
+
+        console.log(editor, string);
+        console.log(editor.getSelection());
+    }
+
+    function addBold(editor, string)
+    {
+        editor.replaceSelection('**' + string + '**');
+    }
+
+    function removeBold(editor, string)
+    {
+        editor.replaceSelection(string.substring(2, string.length - 2));
+    }
 
     //Themes: material, midnight, monokai, nord, solarized-dark, tomorrow-night-bright, yonce
 
