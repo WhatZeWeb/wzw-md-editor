@@ -15,8 +15,11 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.46.0/mode/markdown/markdown.js"></script>
 <script>
     const elementBold = `<button type="button" data-val="bold" class="btn btn-default"><i class="fas fa-bold"></i></button>`;
+    const elementItalic = `<button type="button" data-val="italic" class="btn btn-default"><i class="fas fa-italic"></i></button>`;
 
-    $("#textarea").before(elementBold);
+    const stylesList = `${elementBold} ${elementItalic}`;
+
+    $("#textarea").before(stylesList);
 
     const editor = CodeMirror.fromTextArea(document.getElementById("textarea"), {
         mode: 'markdown',
@@ -33,6 +36,10 @@
         switch(val){
             case 'bold':
                 setBold(editor, string);
+                break;
+
+            case 'italic':
+                setItalic(editor, string);
                 break;
         }
     });
@@ -59,6 +66,30 @@
     function removeBold(editor, string)
     {
         editor.replaceSelection(string.substring(2, string.length - 2));
+    }
+
+    function setItalic(editor, string)
+    {
+        if(string.length > 0) {
+            let start = string.includes('*', 0);
+            let end = string.includes('*', string.length - 1);
+
+            if(start && end) {
+                removeItalic(editor, string);
+            } else {
+                addItalic(editor, string);
+            }
+        }
+    }
+
+    function addItalic(editor, string)
+    {
+        editor.replaceSelection('*' + string + '*');
+    }
+
+    function removeItalic(editor, string)
+    {
+        editor.replaceSelection(string.substring(1, string.length - 1));
     }
 
     //Themes: material, midnight, monokai, nord, solarized-dark, tomorrow-night-bright, yonce
