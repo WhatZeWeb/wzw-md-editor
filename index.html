@@ -14,11 +14,18 @@
         .CodeMirror {
             width: 49%;
             float: left;
+            height: 500px;
         }
         #preview{
             width: 49%;
             float: left;
-            padding: 5px 10px;
+            padding: 0 10px;
+            color: #F5F5F5;
+            background-color: #263238;
+            height: 500px;
+        }
+        #preview a{
+            color: #3E92CC;
         }
     </style>
 </head>
@@ -35,7 +42,7 @@
     const elementItalic = `<button type="button" data-val="italic" class="btn btn-default"><i class="fas fa-italic"></i></button>`;
     const elementStrikeThrough = `<button type="button" data-val="strikethrough" class="btn btn-default"><i class="fas fa-strikethrough"></i></button>`;
 
-    const stylesList = `${elementBold} ${elementItalic} ${elementStrikeThrough}`;
+    const stylesList = `<div>${elementBold} ${elementItalic} ${elementStrikeThrough}</div>`;
 
     $("#textarea").before(stylesList);
 
