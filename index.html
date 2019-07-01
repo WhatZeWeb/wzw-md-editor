@@ -41,10 +41,18 @@
     const elementBold = `<button type="button" data-val="bold" class="btn btn-default"><i class="fas fa-bold"></i></button>`;
     const elementItalic = `<button type="button" data-val="italic" class="btn btn-default"><i class="fas fa-italic"></i></button>`;
     const elementStrikeThrough = `<button type="button" data-val="strikethrough" class="btn btn-default"><i class="fas fa-strikethrough"></i></button>`;
+    const h1 = `<button type="button" data-val="h1" class="btn btn-default">H1</button>`;
+    const h2 = `<button type="button" data-val="h2" class="btn btn-default">H2</button>`;
+    const h3 = `<button type="button" data-val="h3" class="btn btn-default">H3</button>`;
+    const h4 = `<button type="button" data-val="h4" class="btn btn-default">H4</button>`;
+    const h5 = `<button type="button" data-val="h5" class="btn btn-default">H5</button>`;
+    const h6 = `<button type="button" data-val="h6" class="btn btn-default">H6</button>`;
 
-    const stylesList = `<div>${elementBold} ${elementItalic} ${elementStrikeThrough}</div>`;
+    const stylesList = `${elementBold} ${elementItalic} ${elementStrikeThrough}`;
+    const titleList = `${h1} ${h2} ${h3} ${h4} ${h5} ${h6}`;
+    const menu = `<div>${stylesList} ${titleList}</div>`;
 
-    $("#textarea").before(stylesList);
+    $("#textarea").before(menu);
 
     const editor = CodeMirror.fromTextArea(document.getElementById("textarea"), {
         mode: 'text/html',
@@ -68,25 +76,46 @@
 
             switch(val){
                 case 'bold':
-                    //setBold(editor, string);
                     setStyle(editor, string, '*', 2);
                     break;
 
                 case 'italic':
-                    //setItalic(editor, string);
                     setStyle(editor, string, '*', 1);
                     break;
 
                 case 'strikethrough':
-                    //setItalic(editor, string);
                     setStyle(editor, string, '~', 2);
                     break;
+
+                case 'h1':
+                    setTitle(editor, string, '#', 1);
+                    break;
+
+                case 'h2':
+                    setTitle(editor, string, '#', 2);
+                    break;
+
+                case 'h3':
+                    setTitle(editor, string, '#', 3);
+                    break;
+
+                case 'h4':
+                    setTitle(editor, string, '#', 4);
+                    break;
+
+                case 'h5':
+                    setTitle(editor, string, '#', 5);
+                    break;
+
+                case 'h6':
+                    setTitle(editor, string, '#', 6);
+                    break;
+
             }
         });
     }
 
     function setStyle(editor, string, char, length) {
-        console.log(editor, string, char, length);
 
         if(string.length > 0) {
             let value = char.repeat(length);
@@ -101,14 +130,34 @@
         }
     }
 
-    function addStyle(editor, string, value)
-    {
+    function setTitle(editor, string, char, length) {
+
+        if(string.length > 0) {
+            let value = char.repeat(length);
+            let start = string.includes(`${value}`, 0);
+
+            if(start) {
+                removeTitle(editor, string, length);
+            } else {
+                addTitle(editor, string, value);
+            }
+        }
+    }
+
+    function addStyle(editor, string, value) {
         editor.replaceSelection(`${value}${string}${value}`);
     }
 
-    function removeStyle(editor, string, length)
-    {
+    function removeStyle(editor, string, length) {
         editor.replaceSelection(string.substring(length, string.length - length));
+    }
+
+    function addTitle(editor, string, value) {
+        editor.replaceSelection(`${value} ${string}`);
+    }
+
+    function removeTitle(editor, string, length) {
+        editor.replaceSelection(string.substring(length + 1, string.length - length));
     }
 
     //Themes: material, midnight, monokai, nord, solarized-dark, tomorrow-night-bright, yonce
