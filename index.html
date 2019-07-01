@@ -41,6 +41,7 @@
     const elementBold = `<button type="button" data-val="bold" class="btn btn-default"><i class="fas fa-bold"></i></button>`;
     const elementItalic = `<button type="button" data-val="italic" class="btn btn-default"><i class="fas fa-italic"></i></button>`;
     const elementStrikeThrough = `<button type="button" data-val="strikethrough" class="btn btn-default"><i class="fas fa-strikethrough"></i></button>`;
+
     const h1 = `<button type="button" data-val="h1" class="btn btn-default">H1</button>`;
     const h2 = `<button type="button" data-val="h2" class="btn btn-default">H2</button>`;
     const h3 = `<button type="button" data-val="h3" class="btn btn-default">H3</button>`;
@@ -48,9 +49,14 @@
     const h5 = `<button type="button" data-val="h5" class="btn btn-default">H5</button>`;
     const h6 = `<button type="button" data-val="h6" class="btn btn-default">H6</button>`;
 
+    const ulList = `<button type="button" data-val="ul-list" class="btn btn-default"><i class="fas fa-list-ul"></i></button>`;
+    const olList = `<button type="button" data-val="ol-list" class="btn btn-default"><i class="fas fa-list-ol"></i></button>`;
+
     const stylesList = `${elementBold} ${elementItalic} ${elementStrikeThrough}`;
     const titleList = `${h1} ${h2} ${h3} ${h4} ${h5} ${h6}`;
-    const menu = `<div>${stylesList} ${titleList}</div>`;
+    const lists =  `${ulList} ${olList}`;
+
+    const menu = `<div>${stylesList} ${titleList} ${lists}</div>`;
 
     $("#textarea").before(menu);
 
@@ -60,7 +66,6 @@
         theme: "material",
         extraKeys: {"Enter": "newlineAndIndentContinueMarkdownList"}
     }).on('change', editor => {
-        console.log(editor.getValue());
         document.getElementById('preview').innerHTML =
             marked(editor.getValue());
 
@@ -111,6 +116,14 @@
                     setTitle(editor, string, '#', 6);
                     break;
 
+                case 'ul-list':
+                    setUlList(editor, string, '*', 1);
+                    break;
+
+                case 'ol-list':
+                    setList(editor, string, '#', 1);
+                    break;
+
             }
         });
     }
@@ -144,6 +157,20 @@
         }
     }
 
+    function setUlList(editor, string, char, length) {
+
+        if(string.length > 0) {
+            let value = char.repeat(length);
+            let start = string.includes(`${value}`, 0);
+
+            if(start) {
+                removeUlList(editor, string, length);
+            } else {
+                addUlList(editor, string, value);
+            }
+        }
+    }
+
     function addStyle(editor, string, value) {
         editor.replaceSelection(`${value}${string}${value}`);
     }
@@ -157,7 +184,15 @@
     }
 
     function removeTitle(editor, string, length) {
-        editor.replaceSelection(string.substring(length + 1, string.length - length));
+        editor.replaceSelection(string.substring(length + 1, string.length - length + 1));
+    }
+
+    function addUlList(editor, string, value) {
+        editor.replaceSelection(`${value} ${editor.getSelection().replace(/\n/g,`\n${value} `)}`);
+    }
+
+    function removeUlList(editor, string, length) {
+        editor.replaceSelection(string.substring(length + 1, string.length - length + 1));
     }
 
     //Themes: material, midnight, monokai, nord, solarized-dark, tomorrow-night-bright, yonce
