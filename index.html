@@ -28,6 +28,10 @@
         #preview a{
             color: #3E92CC;
         }
+        blockquote {
+            border-left: solid 3px grey;
+            padding-left: 10px;
+        }
     </style>
 </head>
 <body>
@@ -42,6 +46,7 @@
     const elementBold = `<button type="button" data-val="bold" class="btn btn-default"><i class="fas fa-bold"></i></button>`;
     const elementItalic = `<button type="button" data-val="italic" class="btn btn-default"><i class="fas fa-italic"></i></button>`;
     const elementStrikeThrough = `<button type="button" data-val="strikethrough" class="btn btn-default"><i class="fas fa-strikethrough"></i></button>`;
+    const blockquote = `<button type="button" data-val="blockquote" class="btn btn-default"><i class="fas fa-quote-right"></i></button>`;
 
     const h1 = `<button type="button" data-val="h1" class="btn btn-default">H1</button>`;
     const h2 = `<button type="button" data-val="h2" class="btn btn-default">H2</button>`;
@@ -53,7 +58,7 @@
     const ulList = `<button type="button" data-val="ul-list" class="btn btn-default"><i class="fas fa-list-ul"></i></button>`;
     const olList = `<button type="button" data-val="ol-list" class="btn btn-default"><i class="fas fa-list-ol"></i></button>`;
 
-    const stylesList = `${elementBold} ${elementItalic} ${elementStrikeThrough}`;
+    const stylesList = `${elementBold} ${elementItalic} ${elementStrikeThrough} ${blockquote}`;
     const titleList = `${h1} ${h2} ${h3} ${h4} ${h5} ${h6}`;
     const lists =  `${ulList} ${olList}`;
 
@@ -91,6 +96,10 @@
 
                 case 'strikethrough':
                     setStyle(editor, string, '~', 2);
+                    break;
+
+                case 'blockquote':
+                    setBlockquote(editor, string, '>', 1);
                     break;
 
                 case 'h1':
@@ -144,6 +153,20 @@
         }
     }
 
+    function setBlockquote(editor, string, char, length) {
+
+        if(string.length > 0) {
+            let value = char.repeat(length);
+            let start = string.includes(`${value}`, 0);
+
+            if(start) {
+                removeBlockquote(editor, string, length);
+            } else {
+                addBlockquote(editor, string, value);
+            }
+        }
+    }
+
     function setTitle(editor, string, char, length) {
 
         if(string.length > 0) {
@@ -176,7 +199,6 @@
         if(string.length > 0) {
             let value = char.repeat(length);
             let start = string.includes(`${value}`, 0);
-            console.log(start);
             if(start) {
                 removeOlList(editor, string);
             } else {
@@ -193,11 +215,20 @@
         editor.replaceSelection(string.substring(length, string.length - length));
     }
 
+    function addBlockquote(editor, string, value) {
+        editor.replaceSelection(`${value} ${string}`);
+    }
+
+    function removeBlockquote(editor, string, length) {
+        editor.replaceSelection(string.substring(length, string.length - length));
+    }
+
     function addTitle(editor, string, value) {
         editor.replaceSelection(`${value} ${string}`);
     }
 
     function removeTitle(editor, string, length) {
+        //TODO: correct length at end
         editor.replaceSelection(string.substring(length + 1, string.length - length + 1));
     }
 
