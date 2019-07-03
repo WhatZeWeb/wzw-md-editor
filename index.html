@@ -58,11 +58,23 @@
     const ulList = `<button type="button" data-val="ul-list" class="btn btn-default"><i class="fas fa-list-ul"></i></button>`;
     const olList = `<button type="button" data-val="ol-list" class="btn btn-default"><i class="fas fa-list-ol"></i></button>`;
 
+    const hr = `<button type="button" data-val="hr" class="btn btn-default"><i class="fas fa-minus"></i></button>`;
+    const link = `<button type="button" data-val="link" class="btn btn-default"><i class="fas fa-link"></i></button>`;
+    const image = `<button type="button" data-val="image" class="btn btn-default"><i class="fas fa-image"></i></button>`;
+    const table = `<button type="button" data-val="table" class="btn btn-default"><i class="fas fa-table"></i></button>`;
+    const emoji = `<button type="button" data-val="emoji" class="btn btn-default"><i class="far fa-smile"></i></button>`;
+
+    const terminal = `<button type="button" data-val="hr" class="btn btn-default"><i class="fas fa-terminal"></i></button>`;
+    const code = `<button type="button" data-val="link" class="btn btn-default"><i class="fas fa-file-code"></i></button>`;
+    const github = `<button type="button" data-val="image" class="btn btn-default"><i class="fab fa-github"></i></button>`;
+
     const stylesList = `${elementBold} ${elementItalic} ${elementStrikeThrough} ${blockquote}`;
     const titleList = `${h1} ${h2} ${h3} ${h4} ${h5} ${h6}`;
     const lists =  `${ulList} ${olList}`;
+    const other = `${hr} ${link} ${image} ${table} ${emoji}`;
+    const codes = `${terminal} ${code} ${github}`;
 
-    const menu = `<div>${stylesList} ${titleList} ${lists}</div>`;
+    const menu = `<div>${stylesList} ${titleList} ${lists} ${other} ${codes}</div>`;
 
     $("#textarea").before(menu);
 
