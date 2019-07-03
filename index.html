@@ -7,40 +7,28 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.46.0/codemirror.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.46.0/theme/material.css" />
     <link href="https://fonts.googleapis.com/css?family=Merriweather|Raleway&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Merriweather', sans-serif;
-        }
-        .CodeMirror {
-            width: 49%;
-            float: left;
-            height: 500px;
-        }
-        button {
-            font-size: 16px;
-            border-radius: 5px;
-        }
-        #preview{
-            width: 49%;
-            float: left;
-            padding: 0 10px;
-            color: #F5F5F5;
-            background-color: #263238;
-            height: 500px;
-            border-left: solid 1px white;
-        }
-        #preview a{
-            color: #3E92CC;
-        }
-        blockquote {
-            border-left: solid 3px grey;
-            padding-left: 10px;
-        }
-    </style>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 <label for="textarea">Zone de texte</label><br>
-<textarea id="textarea"></textarea>
+<textarea id="textarea"># Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+## Curabitur ultricies ultricies placerat.
+### Proin facilisis lorem quis dolor rhoncus mattis.
+#### Aliquam tristique, leo non sollicitudin tempor, est tellus semper nisl, sit amet venenatis sapien tellus ac ipsum.
+##### Integer in laoreet risus, accumsan sagittis tortor.
+###### Nunc viverra feugiat sapien, et lacinia lorem egestas ac.
+*Nunc auctor velit blandit, consectetur nibh a, congue lorem.*
+**Quisque cursus mattis sollicitudin.**
+~Sed luctus, purus consequat sagittis fermentum, magna neque pulvinar ligula, ac rutrum purus ligula vitae odio.~
+*Nunc nec volutpat nulla, vel mattis libero.
+*Vivamus maximus sem blandit scelerisque vestibulum.
+1. Donec ut sollicitudin lacus, ut lacinia justo.
+2. Morbi quis vehicula ex.
+Duis quis imperdiet quam.
+Mauris quam dui, ultricies at magna at, ultrices viverra dui.
+Sed auctor dictum orci vitae gravida.
+Nunc ut malesuada risus.
+</textarea>
 <div id="preview"></div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.46.0/codemirror.js"></script>
