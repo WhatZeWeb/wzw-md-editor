@@ -16,6 +16,10 @@
             float: left;
             height: 500px;
         }
+        button {
+            font-size: 16px;
+            border-radius: 5px;
+        }
         #preview{
             width: 49%;
             float: left;
@@ -64,9 +68,9 @@
     const table = `<button type="button" data-val="table" class="btn btn-default"><i class="fas fa-table"></i></button>`;
     const emoji = `<button type="button" data-val="emoji" class="btn btn-default"><i class="far fa-smile"></i></button>`;
 
-    const terminal = `<button type="button" data-val="hr" class="btn btn-default"><i class="fas fa-terminal"></i></button>`;
-    const code = `<button type="button" data-val="link" class="btn btn-default"><i class="fas fa-file-code"></i></button>`;
-    const github = `<button type="button" data-val="image" class="btn btn-default"><i class="fab fa-github"></i></button>`;
+    const terminal = `<button type="button" data-val="line" class="btn btn-default"><i class="fas fa-terminal"></i></button>`;
+    const code = `<button type="button" data-val="code" class="btn btn-default"><i class="fas fa-file-code"></i></button>`;
+    const github = `<button type="button" data-val="github" class="btn btn-default"><i class="fab fa-github"></i></button>`;
 
     const stylesList = `${elementBold} ${elementItalic} ${elementStrikeThrough} ${blockquote}`;
     const titleList = `${h1} ${h2} ${h3} ${h4} ${h5} ${h6}`;
@@ -144,6 +148,38 @@
 
                 case 'ol-list':
                     setOlList(editor, string, '1', 1);
+                    break;
+
+                case 'hr':
+                    console.log('todo');
+                    break;
+
+                case 'link':
+                    console.log('todo');
+                    break;
+
+                case 'image':
+                    console.log('todo');
+                    break;
+
+                case 'table':
+                    console.log('todo');
+                    break;
+
+                case 'emoji':
+                    console.log('todo');
+                    break;
+
+                case 'line':
+                    console.log('todo');
+                    break;
+
+                case 'code':
+                    console.log('todo');
+                    break;
+
+                case 'github':
+                    console.log('todo');
                     break;
 
             }
