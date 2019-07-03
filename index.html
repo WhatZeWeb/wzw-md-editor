@@ -122,7 +122,7 @@
                     break;
 
                 case 'ol-list':
-                    setOlList(editor, string, '#', 1);
+                    setOlList(editor, string, '1', 1);
                     break;
 
             }
@@ -165,7 +165,7 @@
             let start = string.includes(`${value}`, 0);
 
             if(start) {
-                removeUlList(editor, string, length);
+                removeUlList(editor, string);
             } else {
                 addUlList(editor, string, value);
             }
@@ -173,15 +173,14 @@
     }
 
     function setOlList(editor, string, char, length) {
-
         if(string.length > 0) {
             let value = char.repeat(length);
             let start = string.includes(`${value}`, 0);
             console.log(start);
             if(start) {
-                removeOlList(editor, string, length);
+                removeOlList(editor, string);
             } else {
-                addOlList(editor);
+                addOlList(editor, string);
             }
         }
     }
@@ -203,20 +202,19 @@
     }
 
     function addUlList(editor, string, value) {
-        console.log(editor.getSelection());
-        editor.replaceSelection(`${value} ${editor.getSelection().replace(/\n/g,`\n${value} `)}`);
+        editor.replaceSelection(`${value} ${string.replace(/\n/g,`\n${value} `)}`);
     }
 
-    function removeUlList(editor, string, length) {
-        editor.replaceSelection(string.substring(length + 1, string.length - length + 1));
+    function removeUlList(editor, string) {
+        let text = string.split("\n");
+        for (let i = 0; i < text.length; i++) {
+            text[i] = text[i].substring(2);
+        }
+        editor.replaceSelection(text.join("\n"));
     }
 
-    function addOlList(editor) {
-        console.log(editor.getSelection());
-        let selection = editor.getSelection();
-
-        let text = selection.split("\n");
-        console.log(text);
+    function addOlList(editor, string) {
+        let text = string.split("\n");
 
         for (let i = 0; i < text.length; i++) {
             text[i] = (text[i] === "") ? "" : (i+1) + ". " + text[i];
@@ -224,14 +222,12 @@
         editor.replaceSelection(text.join("\n"));
     }
 
-    function removeOlList(editor, string, length) {
-        let selection = editor.getSelection();
+    function removeOlList(editor, string) {
 
-        let text = selection.split("\n");
-        console.log(text);
+        let text = string.split("\n");
 
         for (let i = 0; i < text.length; i++) {
-            text[i] = text[i].substring(2);
+            text[i] = text[i].substring(3);
         }
         editor.replaceSelection(text.join("\n"));
     }
