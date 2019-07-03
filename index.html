@@ -122,7 +122,7 @@
                     break;
 
                 case 'ol-list':
-                    setList(editor, string, '#', 1);
+                    setOlList(editor, string, '#', 1);
                     break;
 
             }
@@ -172,6 +172,20 @@
         }
     }
 
+    function setOlList(editor, string, char, length) {
+
+        if(string.length > 0) {
+            let value = char.repeat(length);
+            let start = string.includes(`${value}`, 0);
+            console.log(start);
+            if(start) {
+                removeOlList(editor, string, length);
+            } else {
+                addOlList(editor);
+            }
+        }
+    }
+
     function addStyle(editor, string, value) {
         editor.replaceSelection(`${value}${string}${value}`);
     }
@@ -189,11 +203,37 @@
     }
 
     function addUlList(editor, string, value) {
+        console.log(editor.getSelection());
         editor.replaceSelection(`${value} ${editor.getSelection().replace(/\n/g,`\n${value} `)}`);
     }
 
     function removeUlList(editor, string, length) {
         editor.replaceSelection(string.substring(length + 1, string.length - length + 1));
+    }
+
+    function addOlList(editor) {
+        console.log(editor.getSelection());
+        let selection = editor.getSelection();
+
+        let text = selection.split("\n");
+        console.log(text);
+
+        for (let i = 0; i < text.length; i++) {
+            text[i] = (text[i] === "") ? "" : (i+1) + ". " + text[i];
+        }
+        editor.replaceSelection(text.join("\n"));
+    }
+
+    function removeOlList(editor, string, length) {
+        let selection = editor.getSelection();
+
+        let text = selection.split("\n");
+        console.log(text);
+
+        for (let i = 0; i < text.length; i++) {
+            text[i] = text[i].substring(2);
+        }
+        editor.replaceSelection(text.join("\n"));
     }
 
     //Themes: material, midnight, monokai, nord, solarized-dark, tomorrow-night-bright, yonce
